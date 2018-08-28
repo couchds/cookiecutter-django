@@ -53,6 +53,8 @@
             </li>
             {% if request.user.is_authenticated %}
               <li class="nav-item">
+
+                {% if cookiecutter.use_ldap == 'n' -%}
                 {# URL provided by django-allauth/account/urls.py #}
                 <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
               </li>
@@ -69,6 +71,8 @@
                 {# URL provided by django-allauth/account/urls.py #}
                 <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
               </li>
+                {%- else %}
+                {%- endif %}
             {% endif %}
           </ul>
         </div>
