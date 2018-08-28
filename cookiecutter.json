@@ -32,6 +32,7 @@
     "Gulp"
   ],
   "custom_bootstrap_compilation": "n",
+  "use_ldap": "n",
   "use_compressor": "n",
   "use_celery": "n",
   "use_mailhog": "n",
