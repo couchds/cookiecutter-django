@@ -250,6 +250,24 @@ CELERYD_TASK_TIME_LIMIT = 5 * 60
 CELERYD_TASK_SOFT_TIME_LIMIT = 60
 
 {%- endif %}
+
+{% if cookiecutter.use_ldap == 'y' -%}
+# Configure LDAP here.
+LDAP_AUTH_URL = ''
+LDAP_AUTH_USE_TLS = False
+LDAP_AUTH_FORMAT_USERNAME = 'django_python3_ldap.utils.format_username_active_directory'
+LDAP_AUTH_ACTIVE_DIRECTORY_DOMAIN = ''
+LDAP_AUTH_SEARCH_BASE = ''
+LDAP_AUTH_USER_FIELDS = {
+            "username": "sAMAccountName",
+                "first_name": "givenName",
+                    "last_name": "sn",
+                        "email": "mail",
+                        }
+LDAP_AUTH_OBJECT_CLASS = 'User'
+LDAP_AUTH_FORMAT_SEARCH_FILTERS = '{{cookiecutter.project_slug}}.ldap_groupfilter.custom_format_search_filters'
+
+{%- else %}
 # django-allauth
 # ------------------------------------------------------------------------------
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
@@ -263,6 +281,8 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_ADAPTER = '{{cookiecutter.project_slug}}.users.adapters.AccountAdapter'
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 SOCIALACCOUNT_ADAPTER = '{{cookiecutter.project_slug}}.users.adapters.SocialAccountAdapter'
+{%- endif %}
+
 
 {% if cookiecutter.use_compressor == 'y' -%}
 # django-compressor
