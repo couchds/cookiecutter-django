@@ -69,9 +69,14 @@ DJANGO_APPS = [
 ]
 THIRD_PARTY_APPS = [
     'crispy_forms',
+
+    {% if cookiecutter.use_ldap == 'n' -%}
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    {% -else %}
+    'django_python3_ldap',
+    {%- endif %}
     'rest_framework',
 ]
 LOCAL_APPS = [
@@ -93,7 +98,12 @@ MIGRATION_MODULES = {
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
+
+    {% if cookiecutter.use_ldap == 'n' -%}
     'allauth.account.auth_backends.AuthenticationBackend',
+    {% -else %}
+    'django_python3_ldap.auth.LDAPBackend',
+    {%- endif %}
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = 'users.User'
