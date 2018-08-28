@@ -74,7 +74,7 @@ THIRD_PARTY_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    {% -else %}
+    {%- else %}
     'django_python3_ldap',
     {%- endif %}
     'rest_framework',
@@ -101,7 +101,7 @@ AUTHENTICATION_BACKENDS = [
 
     {% if cookiecutter.use_ldap == 'n' -%}
     'allauth.account.auth_backends.AuthenticationBackend',
-    {% -else %}
+    {%- else %}
     'django_python3_ldap.auth.LDAPBackend',
     {%- endif %}
 ]
