@@ -263,11 +263,12 @@ CELERYD_TASK_SOFT_TIME_LIMIT = 60
 
 {% if cookiecutter.use_ldap == 'y' -%}
 # Configure LDAP here.
-LDAP_AUTH_URL = ''
-LDAP_AUTH_USE_TLS = False
+LDAP_AUTH_URL = env('LDAP_AUTH_URL')
+LDAP_AUTH_USE_TLS = env.bool('LDAP_AUTH_USE_TLS', 
+        default=False)
 LDAP_AUTH_FORMAT_USERNAME = 'django_python3_ldap.utils.format_username_active_directory'
-LDAP_AUTH_ACTIVE_DIRECTORY_DOMAIN = ''
-LDAP_AUTH_SEARCH_BASE = ''
+LDAP_AUTH_ACTIVE_DIRECTORY_DOMAIN = env('LDAP_AUTH_ACTIVE_DIRECTORY_DOMAIN')
+LDAP_AUTH_SEARCH_BASE = env('LDAP_AUTH_SEARCH_BASE')
 LDAP_AUTH_USER_FIELDS = {
             "username": "sAMAccountName",
                 "first_name": "givenName",
@@ -275,7 +276,8 @@ LDAP_AUTH_USER_FIELDS = {
                         "email": "mail",
                         }
 LDAP_AUTH_OBJECT_CLASS = 'User'
-LDAP_AUTH_FORMAT_SEARCH_FILTERS = '{{cookiecutter.project_slug}}.ldap_groupfilter.custom_format_search_filters'
+LDAP_AUTH_FORMAT_SEARCH_FILTERS = env('LDAP_AUTH_FORMAT_SEARCH_FILTERS', 
+        default='{{cookiecutter.project_slug}}.ldap_groupfilter.custom_format_search_filters')
 
 {%- else %}
 # django-allauth

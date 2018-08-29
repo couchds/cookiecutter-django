@@ -13,3 +13,14 @@ REDIS_URL=redis://redis:6379/0
 CELERY_FLOWER_USER=!!!SET CELERY_FLOWER_USER!!!
 CELERY_FLOWER_PASSWORD=!!!SET CELERY_FLOWER_PASSWORD!!!
 {% endif %}
+
+{% if cookiecutter.use_ldap == 'y' %}
+#LDAP
+LDAP_AUTH_URL=
+LDAP_AUTH_USE_TLS=
+LDAP_AUTH_FORMAT_USERNAME=
+LDAP_AUTH_ACTIVE_DIRECTORY_DOMAIN=
+LDAP_AUTH_SEARCH_BASE=
+LDAP_AUTH_OBJECT_CLASS=
+LDAP_AUTH_FORMAT_SEARCH_FILTERS={{cookiecutter.project_slug}}.ldap_groupfilter.custom_format_search_filters'
+{% endif %}
