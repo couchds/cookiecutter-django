@@ -69,14 +69,7 @@ DJANGO_APPS = [
 ]
 THIRD_PARTY_APPS = [
     'crispy_forms',
-
-    {% if cookiecutter.use_ldap == 'n' -%}
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    {%- else %}
     'django_python3_ldap',
-    {%- endif %}
     'rest_framework',
 ]
 LOCAL_APPS = [
@@ -98,12 +91,7 @@ MIGRATION_MODULES = {
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-
-    {% if cookiecutter.use_ldap == 'n' -%}
-    'allauth.account.auth_backends.AuthenticationBackend',
-    {%- else %}
     'django_python3_ldap.auth.LDAPBackend',
-    {%- endif %}
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = 'users.User'
@@ -258,10 +246,8 @@ CELERYD_TASK_TIME_LIMIT = 5 * 60
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#task-soft-time-limit
 # TODO: set to whatever value is adequate in your circumstances
 CELERYD_TASK_SOFT_TIME_LIMIT = 60
-
 {%- endif %}
 
-{% if cookiecutter.use_ldap == 'y' -%}
 # Configure LDAP here.
 LDAP_AUTH_URL = env('LDAP_AUTH_URL')
 LDAP_AUTH_USE_TLS = env.bool('LDAP_AUTH_USE_TLS', 
@@ -278,25 +264,6 @@ LDAP_AUTH_USER_FIELDS = {
                         }
 LDAP_AUTH_OBJECT_CLASS = env('LDAP_AUTH_OBJECT_CLASS',
         default='User')
-
-
-
-
-{%- else %}
-# django-allauth
-# ------------------------------------------------------------------------------
-ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_EMAIL_REQUIRED = True
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_ADAPTER = '{{cookiecutter.project_slug}}.users.adapters.AccountAdapter'
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
-SOCIALACCOUNT_ADAPTER = '{{cookiecutter.project_slug}}.users.adapters.SocialAccountAdapter'
-{%- endif %}
 
 
 {% if cookiecutter.use_compressor == 'y' -%}

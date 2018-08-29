@@ -19,10 +19,6 @@ urlpatterns = [
         "users/",
         include("{{ cookiecutter.project_slug }}.users.urls", namespace="users"),
     ),
-
-    {% if cookiecutter.use_ldap == 'n' -%}
-    path("accounts/", include("allauth.urls")),
-    {%- else %}{%- endif %}
     # Your stuff: custom urls includes go here
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
