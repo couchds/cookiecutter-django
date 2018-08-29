@@ -1,3 +1,6 @@
+Cookiecutter Django LDAP 
+This fork of Cookiecutter Django provides LDAP as an alternative authentication option to allauth.
+
 Cookiecutter Django
 =======================
 
